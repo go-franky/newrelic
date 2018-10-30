@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -17,7 +18,9 @@ type query struct {
 }
 
 func main() {
-	godotenv.Load()
+	if err := godotenv.Load(); err != nil {
+		fmt.Fprintf(os.Stderr, "could not load `.env` files")
+	}
 	client := clientV1() // Can also use clientV2() here for different client instantiation
 
 	result := &query{}

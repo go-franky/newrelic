@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -10,7 +11,10 @@ import (
 )
 
 func main() {
-	godotenv.Load()
+	if err := godotenv.Load(); err != nil {
+		fmt.Fprintf(os.Stderr, "could not load `.env` files")
+	}
+
 	client := insights.NewClient(nil,
 		insights.AccountID(os.Getenv("INSIGHTS_ACCOUNT_ID")),
 		insights.InsertKey(os.Getenv("INSIGHTS_INSERT_KEY")),
